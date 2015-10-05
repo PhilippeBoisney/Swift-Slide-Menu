@@ -10,7 +10,7 @@ A Slide Menu, written in Swift, inspired by Slide Menu Material Design (inspired
 
 Please feel free to make pull requests :)
 
-![alt tag](https://raw.githubusercontent.com/Phil69/Swift-Slide-Menu/master/SlideMenu.gif)
+![alt tag](https://github.com/PhilippeBoisney/Swift-Slide-Menu/raw/master/SlideMenu.gif)
 
 ## Version
 1.0
