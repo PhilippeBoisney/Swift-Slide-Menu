@@ -6,7 +6,7 @@
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat
 )](http://mit-license.org)
 
-A Slide Menu, written in Swift 2, inspired by Slide Menu Material Design (inspired by [Google Material Design](https://www.google.com/design/spec/patterns/navigation-drawer.html)) for iOS written in Swift 2.0
+A Slide Menu, written in Swift 2, inspired by Navigation Drawer on Material Design (inspired by [Google Material Design](https://www.google.com/design/spec/patterns/navigation-drawer.html)) for iOS written in Swift 2.0
 
 Please feel free to make pull requests :)
 
