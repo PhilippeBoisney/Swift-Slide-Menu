@@ -16,12 +16,8 @@ Please feel free to make pull requests :)
 1. Add those 4 files on your project : BaseViewController.swift, ChildViewController.swift, MenuTableViewCell.swift, TableViewMenuController.swift. Don't forget to also add "background.jpg" on your asset directory.
 2. Add your own mini icons for menu on your asset directory
 3. Create ViewControllers Swift files for your ChildView, subclass with ChildViewController.
-![alt tag](https://github.com/PhilippeBoisney/Swift-Slide-Menu/raw/master/screenshot1.png)
 4. Create on Storyboard (Interface Builder) your ChildViews (Just drag UIViewController)then set "Storyboard ID" AND "CustomClass"
-![alt tag](https://github.com/PhilippeBoisney/Swift-Slide-Menu/raw/master/screenshot2.png)
 5. Subclass your main ViewController with BaseViewController and on Storyboard(Interface Builder), select your main ViewController, then add a Navigation Controller (Editor => Embed In => Navigation Controller).
-![alt tag](https://github.com/PhilippeBoisney/Swift-Slide-Menu/raw/master/screenshot3.png)
-![alt tag](https://github.com/PhilippeBoisney/Swift-Slide-Menu/raw/master/screenshot4.png)
 6. Finally, Add on your main ViewController:
 ```
 //Add the childViews
