@@ -15,9 +15,9 @@ Please feel free to make pull requests :)
 ## USAGE
 1. Add those 4 files on your project : BaseViewController.swift, ChildViewController.swift, MenuTableViewCell.swift, TableViewMenuController.swift. Don't forget to also add "background.jpg" on your asset directory.
 2. Add your own mini icons for menu on your asset directory
-3. Create ViewControllers Swift files for your ChildView, subclass with ChildViewController.
-4. Create on Storyboard (Interface Builder) your ChildViews (Just drag UIViewController)then set "Storyboard ID" AND "CustomClass"
-5. Subclass your main ViewController with BaseViewController and on Storyboard(Interface Builder), select your main ViewController, then add a Navigation Controller (Editor => Embed In => Navigation Controller).
+3. Create ViewControllers Swift files for your ChildView (Example: HomeViewController.swift and ContactViewController.swift) and subclass it with ChildViewController.
+4. Create on Storyboard (Interface Builder) your ChildViews (Just drag UIViewController) then set "Storyboard ID" (Example: "HomeScreenID" or "ContactScreenID") AND "CustomClass" (HomeViewController.swift or ContactViewController.swift)
+5. Subclass your main ViewController (Example: ViewController.swift) with BaseViewController and on Storyboard(Interface Builder), select your main ViewController, then add a Navigation Controller (Editor => Embed In => Navigation Controller).
 6. Finally, Add on your main ViewController:
 ```swift
 //Add the childViews
