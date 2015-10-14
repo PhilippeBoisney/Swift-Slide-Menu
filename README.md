@@ -19,7 +19,7 @@ Please feel free to make pull requests :)
 4. Create on Storyboard (Interface Builder) your ChildViews (Just drag UIViewController)then set "Storyboard ID" AND "CustomClass"
 5. Subclass your main ViewController with BaseViewController and on Storyboard(Interface Builder), select your main ViewController, then add a Navigation Controller (Editor => Embed In => Navigation Controller).
 6. Finally, Add on your main ViewController:
-```
+```swift
 //Add the childViews
 addChildView("HomeScreenID", titleOfChildren: "HOME", iconName: "home")
 addChildView("ContactScreenID", titleOfChildren: "CONTACT", iconName: "contact")
