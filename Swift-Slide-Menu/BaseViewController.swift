@@ -15,29 +15,21 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     var contactSreenSubView: UIViewController!
     var loveSreenSubView: UIViewController!
     var settingsSreenSubView: UIViewController!
+    
+    var tabOfChildViewController: [UIViewController] = []
+    var tabOfChildViewControllerName: [String] = []
+    var tabOfChildViewControllerIconName: [String] = []
+    
+    var menuToReturn = [Dictionary<String,String>]()
+    var imageNameHeaderMenu: String = "background"
+    
     var objMenu : TableViewMenuController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Create View
-        let containerViews = UIView()
-        containerViews.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(containerViews)
-        self.view.sendSubviewToBack(containerViews)
-        
-        //Height and Width Constraints
-        let widthConstraint = NSLayoutConstraint(item: containerViews, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint(item: containerViews, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
-        
-        self.view.addConstraint(widthConstraint)
-        self.view.addConstraint(heightConstraint)
-        
-        //Implementing our subView
-        homeSreenSubView = storyboard!.instantiateViewControllerWithIdentifier("HomeScreenID")
-        contactSreenSubView = storyboard!.instantiateViewControllerWithIdentifier("ContactScreenID")
-        loveSreenSubView = storyboard!.instantiateViewControllerWithIdentifier("LoveScreenID")
-        settingsSreenSubView = storyboard!.instantiateViewControllerWithIdentifier("SettingsScreenID")
+        //Create containerView that contain child view
+        createContainerView()
         
         //Show the SlideMenu and it's button
         self.addSlideMenuButton()
@@ -45,31 +37,12 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func slideMenuItemSelectedAtIndex(index: Int32) {
-        //print("View Controller is : \(topViewController) \n", terminator: "")
-        switch(index){
-        case 0:
-            self.title="Home"
-            transitionBetweenTwoViews(homeSreenSubView)
-            break
-        case 1:
-            self.title="Contacts"
-            transitionBetweenTwoViews(contactSreenSubView)
-            break
-        case 2:
-            self.title="Love"
-            transitionBetweenTwoViews(loveSreenSubView)
-            break
-        case 3:
-            self.title="Settings"
-            transitionBetweenTwoViews(settingsSreenSubView)
-            break
-
-        default:
-            break
+        if (index>=0) {
+            self.title=tabOfChildViewControllerName[Int(index)]
+            transitionBetweenTwoViews(tabOfChildViewController[Int(index)])
         }
     }
     
@@ -108,7 +81,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         if (sender.tag == 10)
         {
             // Menu is already displayed, no need to display it twice, otherwise we hide the menu
-            self.slideMenuItemSelectedAtIndex(-1);
+            //self.slideMenuItemSelectedAtIndex(-1);
             
             sender.tag = 0;
             
@@ -133,7 +106,10 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         sender.enabled = false
         sender.tag = 10
         
+        //Create Menu View Controller
         objMenu = TableViewMenuController()
+        objMenu.setMenu(menuToReturn)
+        objMenu.setImageName(imageNameHeaderMenu)
         objMenu.btnMenu = sender
         objMenu.delegate = self
         self.view.addSubview(objMenu.view)
@@ -168,6 +144,47 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         }
         
         print("After Remove: \(self.childViewControllers.description)")
+    }
+    
+    func createContainerView(){
+        //Create View
+        let containerViews = UIView()
+        containerViews.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(containerViews)
+        self.view.sendSubviewToBack(containerViews)
+        
+        //Height and Width Constraints
+        let widthConstraint = NSLayoutConstraint(item: containerViews, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
+        let heightConstraint = NSLayoutConstraint(item: containerViews, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
+        
+        self.view.addConstraint(widthConstraint)
+        self.view.addConstraint(heightConstraint)
+        
+        
+    }
+    
+    //MARK: Methods helping users to customise Menu Slider
+    
+    //Add New Screen to Menu Slider
+    func addChildView(storyBoardID: String, titleOfChildren: String, iconName: String) {
+        
+        let childViewToAdd: UIViewController = storyboard!.instantiateViewControllerWithIdentifier(storyBoardID)
+        tabOfChildViewController += [childViewToAdd]
+        tabOfChildViewControllerName += [titleOfChildren]
+        tabOfChildViewControllerIconName += [iconName]
+        
+        menuToReturn.append(["title":titleOfChildren, "icon":iconName])
+    }
+    
+    //Show the first child at startup of application
+    func showFirstChild(){
+        //Load the first subView
+        self.slideMenuItemSelectedAtIndex(0)
+    }
+    
+    //Set the image background of Menu (TableView Header)
+    func setImageBackground(imageName:String){
+        imageNameHeaderMenu=imageName
     }
     
     

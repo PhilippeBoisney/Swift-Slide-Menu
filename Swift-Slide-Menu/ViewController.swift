@@ -13,8 +13,14 @@ class ViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()        
         
-        //Load the first subView
-        self.slideMenuItemSelectedAtIndex(0)
+        addChildView("HomeScreenID", titleOfChildren: "HOME", iconName: "home")
+        addChildView("ContactScreenID", titleOfChildren: "CONTACT", iconName: "contact")
+        addChildView("LoveScreenID", titleOfChildren: "LOVE", iconName: "love")
+        addChildView("SettingsScreenID", titleOfChildren: "SETTINGS", iconName: "settings")
+        
+        
+        //Show the first childScreen
+        showFirstChild()
         
     }
 

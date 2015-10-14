@@ -20,6 +20,7 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
     var arrayMenu = [Dictionary<String,String>]()
     var btnMenu : UIButton!
     var delegate : SlideMenuDelegate?
+    var nameOfImage: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,10 +61,6 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func updatearrayMenu(){
-        arrayMenu.append(["title":"Home", "icon":"home"])
-        arrayMenu.append(["title":"Contacts", "icon":"contact"])
-        arrayMenu.append(["title":"Love", "icon":"love"])
-        arrayMenu.append(["title":"Settings", "icon":"settings"])
         
         tableViewMenu.reloadData()
     }
@@ -78,6 +75,7 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
                 //animationSpeed = 0.3
                 index = -1
             }
+            print("Index 1 \(index)")
             delegate?.slideMenuItemSelectedAtIndex(index)
         }
         
@@ -132,7 +130,7 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let imageToUse: UIImage = UIImage(named: "background.jpg")!
+        let imageToUse: UIImage = UIImage(named: nameOfImage)!
         let imageViewToUse: UIImageView = UIImageView(image: imageToUse)
         
         return imageViewToUse
@@ -171,6 +169,8 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         //Create View
         btnCloseTableViewMenu = UIButton()
         btnCloseTableViewMenu.translatesAutoresizingMaskIntoConstraints = false
+        btnCloseTableViewMenu.backgroundColor=UIColor.blackColor()
+        btnCloseTableViewMenu.alpha=0.5
         btnCloseTableViewMenu.addTarget(self, action: "onCloseMenuClick:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(btnCloseTableViewMenu)
         self.view.sendSubviewToBack(btnCloseTableViewMenu)
@@ -191,6 +191,18 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         self.view.addConstraint(heightConstraint)
         
         //*** END Constraints for btnCloseTableViewMenu ***
+    }
+    
+    //MARK: Methods for modify MenuView properties
+    
+    //Update menu tableView
+    func setMenu (newMenu: [Dictionary<String,String>]){
+        arrayMenu = newMenu
+    }
+    
+    //Update Image of Header
+    func setImageName(newName: String){
+        nameOfImage=newName
     }
     
 }
