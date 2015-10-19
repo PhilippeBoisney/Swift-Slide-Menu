@@ -39,7 +39,7 @@ showFirstChild()
 - Material Design Effect
 
 ## Thanks
-This library use a modified version of this awesome project: ![ZFRippleButton](https://github.com/zoonooz/ZFRippleButton)
+This library use a modified version of this awesome project: [ZFRippleButton](https://github.com/zoonooz/ZFRippleButton)
 
 ## Author
 
