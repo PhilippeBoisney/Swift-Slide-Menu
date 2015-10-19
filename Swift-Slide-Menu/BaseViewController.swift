@@ -10,17 +10,12 @@ import UIKit
 
 class BaseViewController: UIViewController, SlideMenuDelegate {
     
-    //Declaring our subView
-    var homeSreenSubView: UIViewController!
-    var contactSreenSubView: UIViewController!
-    var loveSreenSubView: UIViewController!
-    var settingsSreenSubView: UIViewController!
-    
     var tabOfChildViewController: [UIViewController] = []
     var tabOfChildViewControllerName: [String] = []
     var tabOfChildViewControllerIconName: [String] = []
     
     var menuToReturn = [Dictionary<String,String>]()
+    
     var imageNameHeaderMenu: String = "background"
     
     var objMenu : TableViewMenuController!
@@ -47,9 +42,13 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     }
     
     func addSlideMenuButton(){
-        let btnShowMenu = UIButton(type: UIButtonType.System)
+        
+        let navigationBarHeight: CGFloat = self.navigationController!.navigationBar.frame.height
+        let btnShowMenu = ZFRippleButton()
+        btnShowMenu.alpha = 0
         btnShowMenu.setImage(self.defaultMenuImage(), forState: UIControlState.Normal)
-        btnShowMenu.frame = CGRectMake(0, 0, 30, 30)
+        btnShowMenu.setImage(self.defaultMenuImage(), forState: UIControlState.Highlighted)
+        btnShowMenu.frame = CGRectMake(0, 0, navigationBarHeight, navigationBarHeight)
         btnShowMenu.addTarget(self, action: "onSlideMenuButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         let customBarItem = UIBarButtonItem(customView: btnShowMenu)
         self.navigationItem.leftBarButtonItem = customBarItem;
@@ -58,21 +57,15 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     func defaultMenuImage() -> UIImage {
         var defaultMenuImage = UIImage()
         
-        struct Static {
-            static var onceToken: dispatch_once_t = 0
-        }
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(27, 22), false, 0.0)
+        UIColor.whiteColor().setFill()
+        UIBezierPath(rect: CGRectMake(0, 3, 27, 2)).fill()
+        UIBezierPath(rect: CGRectMake(0, 10, 27, 2)).fill()
+        UIBezierPath(rect: CGRectMake(0, 17, 27, 2)).fill()
         
-        dispatch_once(&Static.onceToken, { () -> Void in
-            UIGraphicsBeginImageContextWithOptions(CGSizeMake(27, 22), false, 0.0)
-            
-            UIBezierPath(rect: CGRectMake(0, 3, 27, 2)).fill()
-            UIBezierPath(rect: CGRectMake(0, 10, 27, 2)).fill()
-            UIBezierPath(rect: CGRectMake(0, 17, 27, 2)).fill()
-            
-            defaultMenuImage = UIGraphicsGetImageFromCurrentImageContext()
-            
-            UIGraphicsEndImageContext()
-        })
+        defaultMenuImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
         
         return defaultMenuImage;
     }
@@ -81,25 +74,10 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         if (sender.tag == 10)
         {
             // Menu is already displayed, no need to display it twice, otherwise we hide the menu
-            //self.slideMenuItemSelectedAtIndex(-1);
-            
             sender.tag = 0;
             
-            let viewMenu : UIView = view.subviews.last!
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                var rectViewMenu : CGRect = viewMenu.frame
-                rectViewMenu.origin.x = -1 * UIScreen.mainScreen().bounds.size.width
-                viewMenu.frame = rectViewMenu
-                viewMenu.layoutIfNeeded()
-                }, completion: { (finished) -> Void in
-                    viewMenu.removeFromSuperview()
-            })
-            
             //Remove Menu View Controller
-            objMenu.willMoveToParentViewController(nil)
-            objMenu.view.removeFromSuperview()
-            objMenu.removeFromParentViewController()
+            objMenu.animateWhenViewDisappear()
             return
         }
         
@@ -114,14 +92,11 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         objMenu.delegate = self
         self.view.addSubview(objMenu.view)
         self.addChildViewController(objMenu)
-        objMenu.view.layoutIfNeeded()
+        
+        sender.enabled = true
         
         objMenu.createOrResizeMenuView()
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.objMenu.view.frame=CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height);
-            sender.enabled = true
-            }, completion:nil)
+        objMenu.animateWhenViewAppear()
     }
     
     //MARK: Functions for Container

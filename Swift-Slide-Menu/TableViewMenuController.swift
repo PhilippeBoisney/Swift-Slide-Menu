@@ -21,11 +21,81 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
     var btnMenu : UIButton!
     var delegate : SlideMenuDelegate?
     var nameOfImage: String!
+    var backgroundImage: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //Setting TableView
+        configureTableView()
+        
+        //Load Constraints
+        applyConstraintsAndViews()
+    }
+    
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        updatearrayMenu()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        //Resize MenuView when orientation change
+        createOrResizeMenuView()
+    }
+    
+    func updatearrayMenu(){
+        tableViewMenu.reloadData()
+    }
+    
+    //MARK: Animations
+    func animateWhenViewAppear(){
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.btnCloseTableViewMenu.alpha = 0.3
+            self.tableViewMenu.frame = CGRectMake(self.tableViewMenu.bounds.size.width, 0, self.tableViewMenu.bounds.size.width,self.tableViewMenu.bounds.size.height)
+            self.tableViewMenu.layoutIfNeeded()
+            }, completion: nil)
+    }
+    
+    func animateWhenViewDisappear(){
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.btnCloseTableViewMenu.alpha = 0.0
+            self.tableViewMenu.frame = CGRectMake(-self.tableViewMenu.bounds.size.width, 0, self.tableViewMenu.bounds.size.width,self.tableViewMenu.bounds.size.height)
+            self.tableViewMenu.layoutIfNeeded()
+            self.view.backgroundColor = UIColor.clearColor()
+            }, completion: { (finished) -> Void in
+                self.willMoveToParentViewController(nil)
+                self.view.removeFromSuperview()
+                self.removeFromParentViewController()
+        })
+    }
+    //MARK: Method call when user touch btnCloseTableViewMenu (Background)
+    
+    func onCloseMenuClick(button:UIButton!){
+        btnMenu.tag = 0
+        //var  animationSpeed : CGFloat = 0.3
+        
+        if (self.delegate != nil) {
+            var index = Int32(button.tag)
+            if(button == self.btnCloseTableViewMenu){
+                //animationSpeed = 0.3
+                index = -1
+            }
+            delegate?.slideMenuItemSelectedAtIndex(index)
+        }
+        
+        animateWhenViewDisappear()
+    }
+    
+    //MARK: Configure Table View
+    
+    func configureTableView(){
+        
         tableViewMenu = UITableView(frame: view.bounds)
         tableViewMenu.dataSource = self
         tableViewMenu.delegate = self
@@ -40,53 +110,6 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         tableViewMenu.layer.shadowRadius = 3
         
         view.addSubview(tableViewMenu)
-        
-        //Load Constraints
-        applyConstraintsAndViews()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        updatearrayMenu()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        //Resize MenuView when orientation change
-        createOrResizeMenuView()
-    }
-    
-    func updatearrayMenu(){
-        
-        tableViewMenu.reloadData()
-    }
-    
-    func onCloseMenuClick(button:UIButton!){
-        btnMenu.tag = 0
-        //var  animationSpeed : CGFloat = 0.3
-        
-        if (self.delegate != nil) {
-            var index = Int32(button.tag)
-            if(button == self.btnCloseTableViewMenu){
-                //animationSpeed = 0.3
-                index = -1
-            }
-            print("Index 1 \(index)")
-            delegate?.slideMenuItemSelectedAtIndex(index)
-        }
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.view.frame = CGRectMake(-UIScreen.mainScreen().bounds.size.width, 0, UIScreen.mainScreen().bounds.size.width,UIScreen.mainScreen().bounds.size.height)
-            self.view.layoutIfNeeded()
-            self.view.backgroundColor = UIColor.clearColor()
-            }, completion: { (finished) -> Void in
-                self.view.removeFromSuperview()
-                self.removeFromParentViewController()
-        })
     }
     
     //MARK: - Table View Methods
@@ -166,11 +189,11 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         
         //*** START Constraints for btnCloseTableViewMenu ***
         
-        //Create View
+        //Create Button View
         btnCloseTableViewMenu = UIButton()
-        btnCloseTableViewMenu.translatesAutoresizingMaskIntoConstraints = false
         btnCloseTableViewMenu.backgroundColor=UIColor.blackColor()
-        btnCloseTableViewMenu.alpha=0.5
+        btnCloseTableViewMenu.alpha=0.0
+        btnCloseTableViewMenu.translatesAutoresizingMaskIntoConstraints = false
         btnCloseTableViewMenu.addTarget(self, action: "onCloseMenuClick:", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(btnCloseTableViewMenu)
         self.view.sendSubviewToBack(btnCloseTableViewMenu)
@@ -181,14 +204,12 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         let verticalConstraint = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
         
         //Height and Width Constraints
-        let widthConstraint = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
+        let widthConstraintForButton = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
+        let heightConstraintForButton = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
+        
         
         //Applying constraints
-        self.view.addConstraint(horizontalConstraint)
-        self.view.addConstraint(verticalConstraint)
-        self.view.addConstraint(widthConstraint)
-        self.view.addConstraint(heightConstraint)
+        self.view.addConstraints([horizontalConstraint, verticalConstraint, widthConstraintForButton, heightConstraintForButton])
         
         //*** END Constraints for btnCloseTableViewMenu ***
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AC1B60C1BD4D53300F3726F /* ZFRippleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1B60B1BD4D53300F3726F /* ZFRippleButton.swift */; settings = {ASSET_TAGS = (); }; };
 		4AD496CD1BC2A793008231E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD496CC1BC2A793008231E4 /* AppDelegate.swift */; };
 		4AD496CF1BC2A793008231E4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD496CE1BC2A793008231E4 /* ViewController.swift */; };
 		4AD496D21BC2A793008231E4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AD496D01BC2A793008231E4 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4AC1B60B1BD4D53300F3726F /* ZFRippleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZFRippleButton.swift; sourceTree = "<group>"; };
 		4AD496C91BC2A793008231E4 /* Swift-Slide-Menu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift-Slide-Menu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AD496CC1BC2A793008231E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4AD496CE1BC2A793008231E4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				4AD496FB1BC2A852008231E4 /* TableViewMenuController.swift */,
 				4AD496FC1BC2A852008231E4 /* ChildViewController.swift */,
 				4AD496FD1BC2A852008231E4 /* MenuTableViewCell.swift */,
+				4AC1B60B1BD4D53300F3726F /* ZFRippleButton.swift */,
 			);
 			name = SwiftSlideMenu;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				4AD497011BC2A852008231E4 /* MenuTableViewCell.swift in Sources */,
 				4AD496CF1BC2A793008231E4 /* ViewController.swift in Sources */,
 				4AD496CD1BC2A793008231E4 /* AppDelegate.swift in Sources */,
+				4AC1B60C1BD4D53300F3726F /* ZFRippleButton.swift in Sources */,
 				4AD497061BC2B82B008231E4 /* HomeViewController.swift in Sources */,
 				4AD496FE1BC2A852008231E4 /* BaseViewController.swift in Sources */,
 				4AD4970A1BC2B85E008231E4 /* LoveViewController.swift in Sources */,

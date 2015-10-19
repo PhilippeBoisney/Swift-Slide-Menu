@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1HP-ft-Otm">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Swift_Slide_Menu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SimpleFloatingActionButton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -53,7 +54,7 @@
         <!--Home View Controller-->
         <scene sceneID="cGy-SM-RJe">
             <objects>
-                <viewController storyboardIdentifier="HomeScreenID" id="N03-0i-njg" customClass="HomeViewController" customModule="Swift_Slide_Menu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeScreenID" id="N03-0i-njg" customClass="HomeViewController" customModule="SimpleFloatingActionButton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Kyx-WX-lpa"/>
                         <viewControllerLayoutGuide type="bottom" id="BjL-4V-Soz"/>
@@ -85,7 +86,7 @@
         <!--Contact View Controller-->
         <scene sceneID="DlQ-dP-Vtp">
             <objects>
-                <viewController storyboardIdentifier="ContactScreenID" id="rO4-gv-WVk" customClass="ContactViewController" customModule="Swift_Slide_Menu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ContactScreenID" id="rO4-gv-WVk" customClass="ContactViewController" customModule="SimpleFloatingActionButton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tXk-7h-DLD"/>
                         <viewControllerLayoutGuide type="bottom" id="gZI-mH-XS8"/>
@@ -117,7 +118,7 @@
         <!--Love View Controller-->
         <scene sceneID="ZHl-8e-YLO">
             <objects>
-                <viewController storyboardIdentifier="LoveScreenID" id="XJe-nd-Dtl" customClass="LoveViewController" customModule="Swift_Slide_Menu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoveScreenID" id="XJe-nd-Dtl" customClass="LoveViewController" customModule="SimpleFloatingActionButton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cpx-SR-Zcy"/>
                         <viewControllerLayoutGuide type="bottom" id="arr-kx-RYc"/>
@@ -149,7 +150,7 @@
         <!--Settings View Controller-->
         <scene sceneID="zOy-fO-6iA">
             <objects>
-                <viewController storyboardIdentifier="SettingsScreenID" id="m83-4k-Bz9" customClass="SettingsViewController" customModule="Swift_Slide_Menu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsScreenID" id="m83-4k-Bz9" customClass="SettingsViewController" customModule="SimpleFloatingActionButton" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WBd-h6-228"/>
                         <viewControllerLayoutGuide type="bottom" id="WQ3-Ix-sUn"/>
