@@ -18,14 +18,14 @@ class ChildViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         
-        createOrResizeView((self.parentViewController?.view.frame.size.width)!, width: (self.parentViewController?.view.frame.size.height)!)
+        createOrResizeView(height: (self.parent?.view.frame.size.width)!, width: (self.parent?.view.frame.size.height)!)
         
     }
     override func viewDidLayoutSubviews() {
         
-        createOrResizeView((self.parentViewController?.view.frame.size.height)!, width: (self.parentViewController?.view.frame.size.width)!)
+        createOrResizeView(height: (self.parent?.view.frame.size.height)!, width: (self.parent?.view.frame.size.width)!)
         
     }
     
@@ -34,7 +34,7 @@ class ChildViewController: UIViewController {
     
     // Allows to resize child view during rotation
     func createOrResizeView(height :CGFloat, width: CGFloat){
-        var newFrame: CGRect = (self.parentViewController?.view.frame)!
+        var newFrame: CGRect = (self.parent?.view.frame)!
         newFrame.size.height = height
         newFrame.size.width = width
         self.view.frame = newFrame

@@ -39,7 +39,7 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updatearrayMenu()
     }
@@ -55,28 +55,28 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
     
     //MARK: Animations
     func animateWhenViewAppear(){
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.btnCloseTableViewMenu.alpha = 0.3
-            self.tableViewMenu.frame = CGRectMake(self.tableViewMenu.bounds.size.width, 0, self.tableViewMenu.bounds.size.width,self.tableViewMenu.bounds.size.height)
+            self.tableViewMenu.frame = CGRect(x: self.tableViewMenu.bounds.size.width, y: 0, width: self.tableViewMenu.bounds.size.width, height: self.tableViewMenu.bounds.size.height)
             self.tableViewMenu.layoutIfNeeded()
             }, completion: nil)
     }
     
     func animateWhenViewDisappear(){
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
             self.btnCloseTableViewMenu.alpha = 0.0
-            self.tableViewMenu.frame = CGRectMake(-self.tableViewMenu.bounds.size.width, 0, self.tableViewMenu.bounds.size.width,self.tableViewMenu.bounds.size.height)
+            self.tableViewMenu.frame = CGRect(x: -self.tableViewMenu.bounds.size.width, y: 0, width: self.tableViewMenu.bounds.size.width, height: self.tableViewMenu.bounds.size.height)
             self.tableViewMenu.layoutIfNeeded()
-            self.view.backgroundColor = UIColor.clearColor()
+            self.view.backgroundColor = UIColor.clear
             }, completion: { (finished) -> Void in
-                self.willMoveToParentViewController(nil)
+                self.willMove(toParentViewController: nil)
                 self.view.removeFromSuperview()
                 self.removeFromParentViewController()
         })
     }
     //MARK: Method call when user touch btnCloseTableViewMenu (Background)
     
-    func onCloseMenuClick(button:UIButton!){
+    @objc func onCloseMenuClick(button:UIButton!){
         btnMenu.tag = 0
         //var  animationSpeed : CGFloat = 0.3
         
@@ -86,7 +86,7 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
                 //animationSpeed = 0.3
                 index = -1
             }
-            delegate?.slideMenuItemSelectedAtIndex(index)
+            delegate?.slideMenuItemSelectedAtIndex(index: index)
         }
         
         animateWhenViewDisappear()
@@ -99,12 +99,12 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         tableViewMenu = UITableView(frame: view.bounds)
         tableViewMenu.dataSource = self
         tableViewMenu.delegate = self
-        tableViewMenu.separatorStyle = .None
-        tableViewMenu.registerClass(MenuTableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableViewMenu.separatorStyle = .none
+        tableViewMenu.register(MenuTableViewCell.self, forCellReuseIdentifier: "Cell")
         tableViewMenu.tableFooterView = UIView()
         tableViewMenu.clipsToBounds = false
         tableViewMenu.layer.masksToBounds = false
-        tableViewMenu.layer.shadowColor = UIColor.blackColor().CGColor
+        tableViewMenu.layer.shadowColor = UIColor.black.cgColor
         tableViewMenu.layer.shadowOffset = CGSize(width: 1, height: 0)
         tableViewMenu.layer.shadowOpacity = 0.1
         tableViewMenu.layer.shadowRadius = 3
@@ -113,14 +113,14 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
     }
     
     //MARK: - Table View Methods
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableViewMenu.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MenuTableViewCell
+        let cell = tableViewMenu.dequeueReusableCell(withIdentifier: "Cell", for: indexPath as IndexPath) as! MenuTableViewCell
         
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
-        cell.layoutMargins = UIEdgeInsetsZero
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        cell.layoutMargins = UIEdgeInsets.zero
         cell.preservesSuperviewLayoutMargins = false
-        cell.backgroundColor = UIColor.clearColor()
+        cell.backgroundColor = UIColor.clear
         
         cell.img.image = UIImage(named: arrayMenu[indexPath.row]["icon"]!)
         cell.label.text = arrayMenu[indexPath.row]["title"]!
@@ -128,13 +128,13 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let btn = UIButton(type: UIButtonType.Custom)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let btn = UIButton(type: UIButtonType.custom)
         btn.tag = indexPath.row
-        self.onCloseMenuClick(btn)
+        self.onCloseMenuClick(button: btn)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayMenu.count
     }
     
@@ -142,16 +142,16 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         return 1;
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return self.view.frame.height/10
     }
     
     //MARK: - Those two methods are used for image on header tableView
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.view.frame.height/3
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let imageToUse: UIImage = UIImage(named: nameOfImage)!
         let imageViewToUse: UIImageView = UIImageView(image: imageToUse)
@@ -163,23 +163,23 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
     
     func createOrResizeMenuView () {
         
-        let widthPurcentage:CGFloat
+        let widthPercentage:CGFloat
         
-        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-            widthPurcentage = 0.4 //Purcentage applied when orientation is Landscape
+        if UIDevice.current.orientation.isLandscape {
+            widthPercentage = 0.4 //Purcentage applied when orientation is Landscape
         } else {
-            widthPurcentage = 0.8 //Purcentage applied when orientation is Landscape
+            widthPercentage = 0.8 //Purcentage applied when orientation is Landscape
         }
         
         var newFrame: CGRect = self.view.frame;
         newFrame.size.height = self.view.frame.size.height
-        newFrame.size.width = (self.view.frame.size.width) * widthPurcentage
+        newFrame.size.width = (self.view.frame.size.width) * widthPercentage
         
         self.tableViewMenu.frame = newFrame
         
         //Set Table View under TopLayoutGuide
-        let topLayoutGuide: CGFloat = self.topLayoutGuide.length;
-        tableViewMenu.contentInset = UIEdgeInsetsMake(topLayoutGuide, 0, 0, 0);
+//        let topLayoutGuide: CGFloat = self.topLayoutGuide.length
+//        tableViewMenu.contentInset = UIEdgeInsetsMake(topLayoutGuide, 0, 0, 0)
         
     }
     
@@ -191,21 +191,21 @@ class TableViewMenuController: UIViewController, UITableViewDataSource, UITableV
         
         //Create Button View
         btnCloseTableViewMenu = UIButton()
-        btnCloseTableViewMenu.backgroundColor=UIColor.blackColor()
+        btnCloseTableViewMenu.backgroundColor=UIColor.black
         btnCloseTableViewMenu.alpha=0.0
         btnCloseTableViewMenu.translatesAutoresizingMaskIntoConstraints = false
-        btnCloseTableViewMenu.addTarget(self, action: "onCloseMenuClick:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnCloseTableViewMenu.addTarget(self, action: #selector(onCloseMenuClick), for: UIControlEvents.touchUpInside)
         self.view.addSubview(btnCloseTableViewMenu)
-        self.view.sendSubviewToBack(btnCloseTableViewMenu)
+        self.view.sendSubview(toBack: btnCloseTableViewMenu)
         
         
         //Horizontal and Vertical Constraints
-        let horizontalConstraint = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute:NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
-        let verticalConstraint = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
+        let horizontalConstraint = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute:NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+        let verticalConstraint = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
         
         //Height and Width Constraints
-        let widthConstraintForButton = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
-        let heightConstraintForButton = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
+        let widthConstraintForButton = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.width, multiplier: 1, constant: 0)
+        let heightConstraintForButton = NSLayoutConstraint(item: btnCloseTableViewMenu, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.height, multiplier: 1, constant: 0)
         
         
         //Applying constraints

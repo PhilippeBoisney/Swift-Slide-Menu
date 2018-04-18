@@ -37,7 +37,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     func slideMenuItemSelectedAtIndex(index: Int32) {
         if (index>=0) {
             self.title=tabOfChildViewControllerName[Int(index)]
-            transitionBetweenTwoViews(tabOfChildViewController[Int(index)])
+            transitionBetweenTwoViews(subViewNew: tabOfChildViewController[Int(index)])
         }
     }
     
@@ -45,11 +45,11 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         
         let navigationBarHeight: CGFloat = self.navigationController!.navigationBar.frame.height
         let btnShowMenu = ZFRippleButton()
-        btnShowMenu.alpha = 0
-        btnShowMenu.setImage(self.defaultMenuImage(), forState: UIControlState.Normal)
-        btnShowMenu.setImage(self.defaultMenuImage(), forState: UIControlState.Highlighted)
-        btnShowMenu.frame = CGRectMake(0, 0, navigationBarHeight, navigationBarHeight)
-        btnShowMenu.addTarget(self, action: "onSlideMenuButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnShowMenu.alpha = 1.0
+        btnShowMenu.setImage(self.defaultMenuImage(), for: UIControlState.normal)
+        btnShowMenu.setImage(self.defaultMenuImage(), for: UIControlState.highlighted)
+        btnShowMenu.frame = CGRect(x: 0, y: 0, width: navigationBarHeight, height: navigationBarHeight)
+        btnShowMenu.addTarget(self, action: #selector(onSlideMenuButtonPressed), for: UIControlEvents.touchUpInside)
         let customBarItem = UIBarButtonItem(customView: btnShowMenu)
         self.navigationItem.leftBarButtonItem = customBarItem;
     }
@@ -57,20 +57,20 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     func defaultMenuImage() -> UIImage {
         var defaultMenuImage = UIImage()
         
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(27, 22), false, 0.0)
-        UIColor.whiteColor().setFill()
-        UIBezierPath(rect: CGRectMake(0, 3, 27, 2)).fill()
-        UIBezierPath(rect: CGRectMake(0, 10, 27, 2)).fill()
-        UIBezierPath(rect: CGRectMake(0, 17, 27, 2)).fill()
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 27, height: 22), false, 0.0)
+        UIColor.white.setFill()
+        UIBezierPath(rect: CGRect(x: 0, y: 3, width: 27, height: 2)).fill()
+        UIBezierPath(rect: CGRect(x: 0, y: 10, width: 27, height: 2)).fill()
+        UIBezierPath(rect: CGRect(x: 0, y: 17, width: 27, height: 2)).fill()
         
-        defaultMenuImage = UIGraphicsGetImageFromCurrentImageContext()
+        defaultMenuImage = UIGraphicsGetImageFromCurrentImageContext()!
         
         UIGraphicsEndImageContext()
         
-        return defaultMenuImage;
+        return defaultMenuImage
     }
     
-    func onSlideMenuButtonPressed(sender : UIButton){
+    @objc func onSlideMenuButtonPressed(sender : UIButton){
         if (sender.tag == 10)
         {
             // Menu is already displayed, no need to display it twice, otherwise we hide the menu
@@ -81,19 +81,19 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
             return
         }
         
-        sender.enabled = false
+        sender.isEnabled = false
         sender.tag = 10
         
         //Create Menu View Controller
         objMenu = TableViewMenuController()
-        objMenu.setMenu(menuToReturn)
-        objMenu.setImageName(imageNameHeaderMenu)
+        objMenu.setMenu(newMenu: menuToReturn)
+        objMenu.setImageName(newName: imageNameHeaderMenu)
         objMenu.btnMenu = sender
         objMenu.delegate = self
         self.view.addSubview(objMenu.view)
         self.addChildViewController(objMenu)
         
-        sender.enabled = true
+        sender.isEnabled = true
         
         objMenu.createOrResizeMenuView()
         objMenu.animateWhenViewAppear()
@@ -104,16 +104,16 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         
         //Add new view
         addChildViewController(subViewNew)
-        subViewNew.view.frame = (self.parentViewController?.view.frame)!
+        subViewNew.view.frame = (self.parent?.view.frame)!
         view.addSubview(subViewNew.view)
-        subViewNew.didMoveToParentViewController(self)
+        subViewNew.didMove(toParentViewController: self)
         
         //Remove old view
         if self.childViewControllers.count > 1 {
             
             //Remove old view
             let oldViewController: UIViewController = self.childViewControllers.first!
-            oldViewController.willMoveToParentViewController(nil)
+            oldViewController.willMove(toParentViewController: nil)
             oldViewController.view.removeFromSuperview()
             oldViewController.removeFromParentViewController()
         }
@@ -126,11 +126,11 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
         let containerViews = UIView()
         containerViews.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(containerViews)
-        self.view.sendSubviewToBack(containerViews)
+        self.view.sendSubview(toBack: containerViews)
         
         //Height and Width Constraints
-        let widthConstraint = NSLayoutConstraint(item: containerViews, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
-        let heightConstraint = NSLayoutConstraint(item: containerViews, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: self.view, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
+        let widthConstraint = NSLayoutConstraint(item: containerViews, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.width, multiplier: 1, constant: 0)
+        let heightConstraint = NSLayoutConstraint(item: containerViews, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.height, multiplier: 1, constant: 0)
         
         self.view.addConstraint(widthConstraint)
         self.view.addConstraint(heightConstraint)
@@ -143,7 +143,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     //Add New Screen to Menu Slider
     func addChildView(storyBoardID: String, titleOfChildren: String, iconName: String) {
         
-        let childViewToAdd: UIViewController = storyboard!.instantiateViewControllerWithIdentifier(storyBoardID)
+        let childViewToAdd: UIViewController = storyboard!.instantiateViewController(withIdentifier: storyBoardID)
         tabOfChildViewController += [childViewToAdd]
         tabOfChildViewControllerName += [titleOfChildren]
         tabOfChildViewControllerIconName += [iconName]
@@ -154,7 +154,7 @@ class BaseViewController: UIViewController, SlideMenuDelegate {
     //Show the first child at startup of application
     func showFirstChild(){
         //Load the first subView
-        self.slideMenuItemSelectedAtIndex(0)
+        self.slideMenuItemSelectedAtIndex(index: 0)
     }
     
     //Set the image background of Menu (TableView Header)
