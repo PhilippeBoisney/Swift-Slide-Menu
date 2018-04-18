@@ -13,10 +13,10 @@ class ViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()        
         
-        addChildView("HomeScreenID", titleOfChildren: "HOME", iconName: "home")
-        addChildView("ContactScreenID", titleOfChildren: "CONTACT", iconName: "contact")
-        addChildView("LoveScreenID", titleOfChildren: "LOVE", iconName: "love")
-        addChildView("SettingsScreenID", titleOfChildren: "SETTINGS", iconName: "settings")
+        addChildView(storyBoardID: "HomeScreenID", titleOfChildren: "HOME", iconName: "home")
+        addChildView(storyBoardID: "ContactScreenID", titleOfChildren: "CONTACT", iconName: "contact")
+        addChildView(storyBoardID: "LoveScreenID", titleOfChildren: "LOVE", iconName: "love")
+        addChildView(storyBoardID: "SettingsScreenID", titleOfChildren: "SETTINGS", iconName: "settings")
         
         
         //Show the first childScreen
